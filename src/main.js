@@ -4,9 +4,15 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import { store } from './store'
-// import firebase from 'firebase'
+import firebase from 'firebase'
 
 Vue.use(Vuetify)
+firebase.initializeApp({
+  apiKey: 'AIzaSyA4QC7_epDgrLX_L_KT5v2ckTFExz4XIt4',
+  authDomain: 'basic-vue-firebase.firebaseapp.com',
+  databaseURL: 'https://basic-vue-firebase.firebaseio.com',
+  projectId: 'basic-vue-firebase'
+})
 
 Vue.config.productionTip = false
 
@@ -17,10 +23,3 @@ new Vue({
   store,
   render: h => h(App)
 })
-
-// firebase.initializeApp({
-//   apiKey: 'YOUR_API_KEY',
-//   authDomain: 'YOUR_AUTH_DOMAIN',
-//   databaseURL: 'YOUR_DATABASE_URL',
-//   projectId: 'YOUR_PROJECT_ID'
-// })
