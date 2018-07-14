@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
@@ -25,14 +24,16 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    autoSignIn ({commit}, payload) {
+      commit('setUser', {email: payload.email})
+    },
     userSignUp ({commit}, payload) {
       commit('setLoading', true)
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
       .then(firebaseUser => {
-        commit('setUser', {email: firebaseUser.email})
+        commit('setUser', {email: firebaseUser.user.email})
         commit('setLoading', false)
         router.push('/home')
-        commit('setError', null)
       })
       .catch(error => {
         commit('setError', error.message)
@@ -52,7 +53,16 @@ export const store = new Vuex.Store({
         commit('setError', error.message)
         commit('setLoading', false)
       })
+    },
+    userSignOut ({commit}) {
+      firebase.auth().signOut()
+      commit('setUser', null)
+      router.push('/')
     }
   },
-  getters: {}
+  getters: {
+    isAuthenticated (state) {
+      return state.user !== null && state.user !== undefined
+    }
+  }
 })
